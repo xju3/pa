@@ -17,7 +17,8 @@ def get_llm_instance():
         openai_base_api = os.getenv("LM_STUDIO")
         if not openai_api_key:
             raise ValueError("OpenAI API key not found. Please set the OPENAI_API_KEY environment variable.")
-        _llm_instance = ChatOpenAI(api_key=openai_api_key, api_base=openai_base_api )
+        _llm_instance = OpenAI(api_key="no-needed")
+        # _llm_instance = ChatOpenAI(base_url="http://localhost:/v1", api_key="no-needed")
     return _llm_instance
 
 def create_email_chain(llm):
@@ -74,6 +75,9 @@ def initialize_agent_executor():
         )
     ]
    
-    agent = initialize_agent(tools, llm, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, verbose=True, return_intermediate_steps=True)
+    agent = initialize_agent(tools, llm, 
+                             agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, 
+                             verbose=True, 
+                             return_intermediate_steps=True)
    
     return agent
